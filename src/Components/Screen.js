@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 
 class Screen extends Component {
     render(){
-        const {screen} = this.props;
+        let {screen, result} = this.props;
+        if(result == "Infinity"){
+            screen = "Math Error Mate";
+        }
         return (
-            <div>
+            <div className="container red">
                 {screen}
             </div>
         )

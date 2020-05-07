@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from "./Button";
 import Screen from "./Screen";
 import Output from "./Output";
+import Author from "./Author";
 
 
 class Calculator extends Component  {
@@ -17,7 +18,7 @@ class Calculator extends Component  {
     }
     
     handleNumbers = (e) => {
-        if(this.state.result != null || this.state.screen ==="21 digits in a number only mate"){
+        if(this.state.result != null || this.state.screen ==="21 Digits in a number only mate"){
             this.setState({
                 input: e.target.value,
                 screen: e.target.value,
@@ -34,7 +35,7 @@ class Calculator extends Component  {
             let maxDigitsLimit = /(\d){21}/g;
             if(maxDigitsLimit.test(this.state.screen)){
                 this.setState({
-                    screen: "21 digits in a number only mate"
+                    screen: "21 Digits in a number only mate"
                 })
             }
             else {
@@ -47,7 +48,7 @@ class Calculator extends Component  {
     }
 
     handleOperators = (e) => {
-        if(this.state.result != null || this.state.screen ==="21 digits in a number only mate") {
+        if(this.state.result != null || this.state.screen ==="21 Digits in a number only mate") {
             this.setState({
                 screen: e.target.value,
                 preAns: this.state.result,
@@ -69,6 +70,7 @@ class Calculator extends Component  {
         let multiplyDivideAndPlusMinusSE = /(?<=[-+]*)([-+][*/])/g; // Syntax Error: -*, +*, -/, +/.
         let multiplyAndDivideSE = /[*/]{2,}/g; // Syntax Error: */ or /*.
         let operatorsForUnkNumSE = /([-+*/]{1,})$/g; // Syntax Error: 5-, 5-+, 5*-/,...And Syntax Error: +++, +-*, /*--,... (don't have any numbers input) 
+        let multiplyAndDividePlaceFirstSE = /(^[*/])(\d*)/g; // Syntax Error: *5, /4, **8, /324, */323, /**,...
 
         //handle the duplicate operators SE
         let plus = /[+]{2,}/g;
@@ -86,6 +88,9 @@ class Calculator extends Component  {
         //handle Numbers SE
         let divideZeroSE = /(\d)([/])(0\d)/g; // Syntax Error: 9/00, 9/0321321, 4/0073213,...
 
+        //handle null Error
+        let nullError = /[null]/g;
+
         //catching Syntax Error
         if  (
                multiplyAndDivideSE.test(this.state.screen) 
@@ -97,6 +102,8 @@ class Calculator extends Component  {
             || decimalSE_4.test(this.state.screen)
             || decimalSE_5.test(this.state.screen)
             || divideZeroSE.test(this.state.screen)
+            || multiplyAndDividePlaceFirstSE.test(this.state.screen)
+            || nullError.test(this.state.screen)
             ) 
         {
             this.setState({
@@ -167,7 +174,7 @@ class Calculator extends Component  {
 
     render(){
         return (
-            <div className="calculator">
+            <div className="calculator container">
                 <Screen result={this.state.result} screen={this.state.screen}/>
                 <Output result={this.state.result} screen={this.state.screen}/>
                 <Button 
@@ -180,6 +187,7 @@ class Calculator extends Component  {
                     handleHistoryRecall={this.handleHistoryRecall}
                     handlePreAns={this.handlePreAns}
                 />
+                <Author />
             </div>
         )
     }

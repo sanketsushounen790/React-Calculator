@@ -7,8 +7,8 @@ class Screen extends Component {
             screen = "Math Error Mate";
         }
         return (
-            <div className="container red">
-                {screen}
+            <div className="container screen">
+                <span>{screen}</span>
             </div>
         )
     }

@@ -9,8 +9,8 @@ class Output extends Component {
             result = null;
         }
         return (
-            <div className="container red right-align">
-                {screen !== "Syntax Error Mate" || screen === "Math Error Mate" ? result : null}
+            <div className="container right-align output">
+                <span>{screen !== "Syntax Error Mate" || screen === "Math Error Mate" ? result : null}</span>
             </div>
         )
     }

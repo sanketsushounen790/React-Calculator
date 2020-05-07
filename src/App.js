@@ -4,7 +4,7 @@ import Calculator from './Components/Calculator';
 class App extends Component {
   render(){
     return (
-      <div>
+      <div className="app">
         <Calculator />
       </div>
     );
